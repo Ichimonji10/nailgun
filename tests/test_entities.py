@@ -10,17 +10,9 @@ from nailgun.entity_mixins import (
     EntityUpdateMixin,
     NoSuchPathError,
 )
+from tests.common import TestCase, http_client
 import mock
 
-from sys import version_info
-if version_info.major == 2:
-    from httplib import ACCEPTED, NO_CONTENT  # pylint:disable=import-error
-else:
-    from http.client import ACCEPTED, NO_CONTENT  # pylint:disable=import-error
-if version_info < (3, 4):
-    from unittest2 import TestCase  # pylint:disable=import-error
-else:
-    from unittest import TestCase
 
 # pylint:disable=too-many-lines
 # The size of this file is a direct reflection of the size of module
@@ -1372,7 +1364,7 @@ class HandleResponseTestCase(TestCase):
     def test_no_content(self):
         """Give the response an HTTP "NO CONTENT" status code."""
         response = mock.Mock()
-        response.status_code = NO_CONTENT
+        response.status_code = http_client.NO_CONTENT
         self.assertEqual(
             entities._handle_response(response, 'foo'),  # pylint:disable=W0212
             None,
@@ -1389,7 +1381,7 @@ class HandleResponseTestCase(TestCase):
 
         """
         response = mock.Mock()
-        response.status_code = ACCEPTED
+        response.status_code = http_client.ACCEPTED
         response.json.return_value = gen_integer()  # not realistic
         for args in [response, 'foo'], [response, 'foo', False]:
             self.assertEqual(
@@ -1409,7 +1401,7 @@ class HandleResponseTestCase(TestCase):
 
         """
         response = mock.Mock()
-        response.status_code = ACCEPTED
+        response.status_code = http_client.ACCEPTED
         response.json.return_value = {'id': gen_integer()}
         with mock.patch.object(entities, 'ForemanTask') as foreman_task:
             foreman_task.return_value.poll.return_value = gen_integer()

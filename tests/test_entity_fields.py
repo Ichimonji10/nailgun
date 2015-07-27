@@ -3,18 +3,9 @@
 from fauxfactory.constants import VALID_NETMASKS
 from nailgun import entity_fields
 from random import randint
+from tests.common import TestCase, urlparse
 import datetime
 import socket
-
-from sys import version_info
-if version_info.major == 2:
-    from urlparse import urlparse  # pylint:disable=import-error
-else:
-    from urllib.parse import urlparse  # pylint:disable=E0611,F0401
-if version_info < (3, 4):
-    from unittest2 import TestCase  # pylint:disable=import-error
-else:
-    from unittest import TestCase
 
 
 # It is OK that this class has no public methods. It just needs to exist for

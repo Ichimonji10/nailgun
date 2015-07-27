@@ -2,20 +2,8 @@
 from mock import call, mock_open, patch
 from nailgun.config import BaseServerConfig, ServerConfig
 from packaging.version import parse
+from tests.common import TestCase, builtins
 import json
-
-from sys import version_info
-if version_info.major == 2:
-    # The `__builtins__` module (note the "s") also provides the `open`
-    # function. However, that module is an implementation detail for CPython 2,
-    # so it should not be relied on.
-    import __builtin__ as builtins  # pylint:disable=import-error
-else:
-    import builtins  # pylint:disable=import-error
-if version_info < (3, 4):
-    from unittest2 import TestCase  # pylint:disable=import-error
-else:
-    from unittest import TestCase
 
 
 FILE_PATH = '/tmp/bogus.json'

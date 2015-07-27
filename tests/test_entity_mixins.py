@@ -12,17 +12,9 @@ from nailgun.entity_fields import (
     StringField,
 )
 from requests.exceptions import HTTPError
+from tests.common import TestCase, http_client
 import mock
 
-from sys import version_info
-if version_info.major == 2:
-    import httplib as http_client  # pylint:disable=import-error
-else:
-    import http.client as http_client  # pylint:disable=import-error
-if version_info < (3, 4):
-    from unittest2 import TestCase  # pylint:disable=import-error
-else:
-    from unittest import TestCase
 
 # pylint:disable=too-many-lines
 # The size of this module is a direct reflection of the size of module
